@@ -1,0 +1,60 @@
+<div class="container">
+  <h2 class="title">Expense Tracker</h2>
+  
+  <div class="add-expense-form">
+    <h3>Add New Expense</h3>
+    
+    <input [(ngModel)]="newExpense.name" placeholder="Name">
+    <input [(ngModel)]="newExpense.description" placeholder="Description">
+    <input [(ngModel)]="newExpense.amount" placeholder="Amount" type="number">
+    <input [(ngModel)]="newExpense.category" placeholder="Category">
+    <input [(ngModel)]="newExpense.date" placeholder="Date" type="date">
+    <button class="btn-add" (click)="addExpense()">Add Expense</button>
+  </div>
+
+  <div class="filter-section">
+    <label>Filter by Category:</label>
+    <input #categoryInput>
+    <button class="btn-filter" (click)="filterByCategory(categoryInput.value)">Filter</button>
+  </div>
+
+  <div *ngIf="deleteMessage" class="delete-message">
+    {{ deleteMessage }}
+  </div>
+
+  <button class="btn-toggle" (click)="toggleTable()">
+    {{ showTable ? 'Hide Details' : 'Show Details' }}
+  </button>
+
+  <table *ngIf="showTable" class="expense-table">
+    <thead>
+      <tr>
+        <th>Sr.no</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Category</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let expense of expenses">
+        <td>{{expense.id}}</td>
+        <td>{{ expense.name }}</td>
+        <td>{{ expense.description }}</td>
+        <td>{{ expense.amount | currency:'INR' }}</td>
+        <td>{{ expense.category }}</td>
+        <td>{{ expense.date }}</td>
+        <td>
+          <button class="btn-update" (click)="updateExpense(expense.id)">Update</button>
+          <button class="btn-delete" (click)="deleteExpense(expense.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="total-amount">
+    <h3>Total Amount: {{ totalAmount | currency:'INR' }}</h3>
+  </div>
+</div>
